@@ -1,7 +1,14 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage} from 'react-native';
+import React, {Component, useState} from 'react';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Button} from 'react-native';
+import { 
+  hasHardwareAsync,
+  isEnrolledAsync,
+  authenticateAsync 
+} from 'expo-local-authentication';
 
-const userInfo = {username: 'a', password: 'a'}
+
+const userInfo = {username: 'a', password: 'a'};
+
 
 class LoginScreen extends Component {
 
@@ -38,19 +45,38 @@ class LoginScreen extends Component {
           onPress={this._login}>
           <Text>Login</Text>
         </TouchableOpacity>
+        <Button title="biometric login" onPress={this.biometricsAuth}></Button>
       </View>
     );
   }
   _login = async() => {
     if(userInfo.username === this.state.username && userInfo.password === this.state.password){
       this.props.navigation.navigate('CardDetails');
-      console.log('login methon')
     } else {
       alert('Username or password incorrect');
     }
   }
+  
+  biometricsAuth = async () => {
+ 
+    const compatible = await hasHardwareAsync()
+    if (!compatible) throw 'This device is not compatible for biometric authentication'
+  
+    const enrolled = await isEnrolledAsync()
+    if (!enrolled) throw "This device doesn't have biometric authentication enabled"
+    
+    const result = await authenticateAsync()
+    if (!result.success){
+      throw `${result.error} - Authentication unsuccessful`
+    } else{
+      this.props.navigation.navigate('CardDetails');
+    }
+    
+  }
 
 }
+
+
 
 
 
