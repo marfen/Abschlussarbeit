@@ -1,49 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { Button, StyleSheet, Text, View, FlatList } from 'react-native';
 
-import GoalItem from './components/GoalItem';
-import GoalInput from './components/GoalInput';
+import RooStack from './navigators/RootStack'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {CredentialsContext} from './components/CredentialsContext';
+
+import AppLoading from 'expo-app-loading';
+
+
 
 export default function App() {
   
-  const [courseGoals, setCourseGoals] = useState([]);
-  const [isAddMode, setIsAddMode] = useState(false);
+  const [appReady, setAppReady] = useState(false);
+  const [storedCredentials, setStoredCredentials] = useState("");
 
- 
+  
 
-  const addGoalHandler = goalTitle => {
-    setCourseGoals(currentGoals => [
-      ...currentGoals, 
-      { id: Math.random().toString(), value: goalTitle}
-    ]);
-    setIsAddMode(false);
-  };
-
-  const removeGoalHandler = goalId => {
-    setCourseGoals(currentGoals => {
-      return currentGoals.filter((goal) => goal.id !== goalId );
-    });
+  const checkLoginCredentials = () => {
+    AsyncStorage
+      .getItem('userCredentials')
+      .then((result) => {
+        if (result !== null) {
+          setStoredCredentials(JSON.parse(result));
+        } else{
+          setStoredCredentials(null);
+        }
+      })
+      .catch(error => console.log(error))
   }
 
-  return (
-    <View style={styles.root}>
-      <Button title='add new goal' onPress={() => setIsAddMode(true)}/>
-      <GoalInput visible={isAddMode} onAddGoal={addGoalHandler}/>
-      <FlatList 
-        data={courseGoals}
-        renderItem={
-          itemData => <GoalItem id={itemData.item.id}  onDelete={removeGoalHandler} title={itemData.item.value}/> 
-        }
-      /> 
-    </View>
-  );
+  if (!appReady){
+    return (
+      <AppLoading
+        startAsync={checkLoginCredentials}
+        onFinish={() => setAppReady(true)}
+        onError={console.warn}
+    />)
+  }
+
+
+
+  return  <CredentialsContext.Provider value={{storedCredentials, setStoredCredentials}}>
+    <RooStack/>
+  </CredentialsContext.Provider>; 
+  
 }
 
-const styles = StyleSheet.create({
-  root:{
-    paddingTop: 100,
-    paddingHorizontal: 30,
-    height: '100%'
-  }
-});
+
+
+
+
+
