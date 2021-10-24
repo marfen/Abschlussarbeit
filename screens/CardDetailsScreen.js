@@ -1,8 +1,12 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import {Text, View, Button, Platform} from 'react-native';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 
+
+import {CredentialsContext} from './../components/CredentialsContext';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -17,6 +21,9 @@ const CardDetailsScreen = ({navigation}) => {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+
+
+  const {storedCredentials, setStoredCredentials} = useContext(CredentialsContext);
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
@@ -37,6 +44,13 @@ const CardDetailsScreen = ({navigation}) => {
     };
   }, []);
 
+  const clearLogin = () => {
+    AsyncStorage.removeItem('userCredentials')
+    .then(() => {
+      setStoredCredentials("")
+    })
+    .catch(error => console.log(error))
+  }
 
   return (
     <View
@@ -56,6 +70,10 @@ const CardDetailsScreen = ({navigation}) => {
         onPress={async () => {
           await sendPushNotification(expoPushToken);
         }}
+      />
+      <Button
+        title="Logout"
+        onPress={clearLogin}
       />
     </View>
   );

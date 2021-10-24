@@ -1,18 +1,29 @@
-import React, {Component, useState} from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Button} from 'react-native';
+import React, {Component, useContext} from 'react';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity,Button} from 'react-native';
 import { 
   hasHardwareAsync,
   isEnrolledAsync,
   authenticateAsync 
 } from 'expo-local-authentication';
 
+import {CredentialsContext} from './../components/CredentialsContext';
 
-const userInfo = {username: 'a', password: 'a'};
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+const userInfo = {username: 'admin', password: '1234'};
 
 
 class LoginScreen extends Component {
 
-  
+
+
+  static contextType = CredentialsContext;
+
+  componentDidMount(){
+    const credentials = this.context;
+  }
+
   constructor(props){
     super(props);
     this.state = {
@@ -21,7 +32,19 @@ class LoginScreen extends Component {
     }
   }
 
+  persistLogin = (credentials) => {
+    AsyncStorage.setItem('userCredentials', JSON.stringify(credentials))
+    .then(() => {
+      this.context.setStoredCredentials(credentials);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+
   render(){
+
+
     return(
       <View style={styles.loginscreen}>
         <TextInput 
@@ -41,7 +64,6 @@ class LoginScreen extends Component {
         />
         <TouchableOpacity 
           style={styles.buttonlogin} 
-          // onPress={() => navigation.navigate('CardDetails')}
           onPress={this._login}>
           <Text>Login</Text>
         </TouchableOpacity>
@@ -49,13 +71,16 @@ class LoginScreen extends Component {
       </View>
     );
   }
+
   _login = async() => {
     if(userInfo.username === this.state.username && userInfo.password === this.state.password){
-      this.props.navigation.navigate('CardDetails');
+      this.persistLogin(this.state)
     } else {
       alert('Username or password incorrect');
     }
   }
+
+  
   
   biometricsAuth = async () => {
  
@@ -69,11 +94,9 @@ class LoginScreen extends Component {
     if (!result.success){
       throw `${result.error} - Authentication unsuccessful`
     } else{
-      this.props.navigation.navigate('CardDetails');
+      this.context.setStoredCredentials(result);
     }
-    
   }
-
 }
 
 

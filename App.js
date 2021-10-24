@@ -1,26 +1,53 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 
-import { NavigationContainer } from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import RooStack from './navigators/RootStack'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import LoginScreen from './screens/LoginScreen';
-import CardDetailsScreen from './screens/CardDetailsScreen';
+import {CredentialsContext} from './components/CredentialsContext';
+
+import AppLoading from 'expo-app-loading';
 
 
-const Stack = createNativeStackNavigator();
 
-const App = () => {
+export default function App() {
   
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Login" component={LoginScreen}/>
-        <Stack.Screen name="CardDetails" component={CardDetailsScreen}/>
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  const [appReady, setAppReady] = useState(false);
+  const [storedCredentials, setStoredCredentials] = useState("");
+
+  
+
+  const checkLoginCredentials = () => {
+    AsyncStorage
+      .getItem('userCredentials')
+      .then((result) => {
+        if (result !== null) {
+          setStoredCredentials(JSON.parse(result));
+        } else{
+          setStoredCredentials(null);
+        }
+      })
+      .catch(error => console.log(error))
+  }
+
+  if (!appReady){
+    return (
+      <AppLoading
+        startAsync={checkLoginCredentials}
+        onFinish={() => setAppReady(true)}
+        onError={console.warn}
+    />)
+  }
+
+
+
+  return  <CredentialsContext.Provider value={{storedCredentials, setStoredCredentials}}>
+    <RooStack/>
+  </CredentialsContext.Provider>; 
+  
 }
 
-export default App;
+
+
+
 
 
