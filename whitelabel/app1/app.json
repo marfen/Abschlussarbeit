@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "cobra-react-native",
-    "slug": "cobra-react-native",
-    "description": "cobra hybrid prototype",
+    "name": "cobra-react-native1",
+    "slug": "cobra-react-native1",
+    "description": "cobra hybrid prototype 1",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

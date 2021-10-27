@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "cobra-react-native",
-    "slug": "cobra-react-native",
-    "description": "cobra hybrid prototype",
+    "name": "cobra-react-native2",
+    "slug": "cobra-react-native2",
+    "description": "cobra hybrid prototype 2",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,7 +18,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.cobrareactnative1",
+      "bundleIdentifier": "com.cobrareactnative2",
       "buildNumber": "1.0.0",
       "supportsTablet": true
     },
@@ -27,7 +27,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.cobrareactnative1",
+      "package": "com.cobrareactnative2",
       "versionCode": 1,
       "googleServicesFile": "./google-services.json"
     },
