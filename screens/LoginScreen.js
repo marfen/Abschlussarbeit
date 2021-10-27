@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const userInfo = {username: 'admin', password: '1234'};
 
 
+
 class LoginScreen extends Component {
 
 
@@ -43,8 +44,6 @@ class LoginScreen extends Component {
   }
 
   render(){
-
-
     return(
       <View style={styles.loginscreen}>
         <TextInput 
@@ -99,32 +98,28 @@ class LoginScreen extends Component {
   }
 }
 
-
-
-
-
 const styles = StyleSheet.create({
 
-    loginscreen:{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'black'
-    },
-    userinput:{
-      borderBottomColor: 'red',
-      borderBottomWidth: 1,
-      width: '80%',
-      marginBottom: 20,
-      backgroundColor: 'white'
-  
-    },
-    buttonlogin:{
-      padding: 15,
-      width: '45%',
-      alignItems: 'center',
-      backgroundColor: 'red'
-    }
-  });
+  loginscreen:{
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'black'
+  },
+  userinput:{
+    borderBottomColor: 'red',
+    borderBottomWidth: 1,
+    width: '80%',
+    marginBottom: 20,
+    backgroundColor: 'white'
+
+  },
+  buttonlogin:{
+    padding: 15,
+    width: '45%',
+    alignItems: 'center',
+    backgroundColor: 'red'
+  }
+});
 
   export default LoginScreen;

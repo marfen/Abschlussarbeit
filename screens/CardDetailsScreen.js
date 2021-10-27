@@ -3,10 +3,14 @@ import {Text, View, Button, Platform} from 'react-native';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 
+import modules from './../modules';
+
 
 import {CredentialsContext} from './../components/CredentialsContext';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const styles = require('./../brands')('App')
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -15,6 +19,7 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
+
 
 const CardDetailsScreen = ({navigation}) => {
   const [expoPushToken, setExpoPushToken] = useState('');
@@ -53,17 +58,17 @@ const CardDetailsScreen = ({navigation}) => {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-      }}>
-      <Text>Your expo push token: {expoPushToken}</Text>
+    <View style={styles.container}>
+      {/* <Text>Your expo push token: {expoPushToken}</Text>
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <Text>Title: {notification && notification.request.content.title} </Text>
         <Text>Body: {notification && notification.request.content.body}</Text>
         <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
+      </View> */}
+      <View>
+        {modules.map(({name, Component}) => 
+          <Component key={name}/>
+        )}
       </View>
       <Button
         title="Press to Send Notification"
