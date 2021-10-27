@@ -13,4 +13,26 @@ export default StyleSheet.create({
         fontWeight: 'bold'
     },
     
+    loginscreen:{
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'grey'
+    },
+
+    userinput:{
+        borderBottomColor: 'red',
+        borderBottomWidth: 1,
+        width: '80%',
+        marginBottom: 20,
+        backgroundColor: 'grey'
+    
+      },
+      buttonlogin:{
+        padding: 15,
+        width: '45%',
+        alignItems: 'center',
+        backgroundColor: 'red'
+      }
+    
 });
