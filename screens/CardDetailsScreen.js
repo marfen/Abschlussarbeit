@@ -33,12 +33,12 @@ const CardDetailsScreen = ({navigation}) => {
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
-    // This listener is fired whenever a notification is received while the app is foregrounded
+    // listener is executed when app is foregrounded
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
     });
 
-    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    // listener is executed when a user touches notifications, works when app is foregrounded, in background or process is killed
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
       console.log(response);
     });
@@ -49,6 +49,7 @@ const CardDetailsScreen = ({navigation}) => {
     };
   }, []);
 
+  //remove login credentials from storage and set global credential context to empty string
   const clearLogin = () => {
     AsyncStorage.removeItem('userCredentials')
     .then(() => {
@@ -59,24 +60,20 @@ const CardDetailsScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {/* <Text>Your expo push token: {expoPushToken}</Text>
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Title: {notification && notification.request.content.title} </Text>
-        <Text>Body: {notification && notification.request.content.body}</Text>
-        <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
-      </View> */}
       <View>
         {modules.map(({name, Component}) => 
           <Component key={name}/>
         )}
       </View>
       <Button
+        style={styles.notificationButton}
         title="Press to Send Notification"
         onPress={async () => {
           await sendPushNotification(expoPushToken);
         }}
       />
       <Button
+        style={styles.logoutButton}
         title="Logout"
         onPress={clearLogin}
       />
@@ -84,13 +81,13 @@ const CardDetailsScreen = ({navigation}) => {
   );
 }
 
-// Can use this function below, OR use Expo's Push Notification Tool-> https://expo.dev/notifications
+// send push notification via expo server, also online tool available for testing  https://expo.dev/notifications
 async function sendPushNotification(expoPushToken) {
   const message = {
     to: expoPushToken,
     sound: 'default',
-    title: 'Original Title',
-    body: 'And here is the body!',
+    title: 'Custom Notification',
+    body: 'Message to be forwarded to user',
     data: { someData: 'goes here' },
   };
 
@@ -105,6 +102,7 @@ async function sendPushNotification(expoPushToken) {
   });
 }
 
+// ask user for permissions and register for push notifications
 async function registerForPushNotificationsAsync() {
   let token;
   if (Constants.isDevice) {

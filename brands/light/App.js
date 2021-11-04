@@ -32,5 +32,8 @@ export default StyleSheet.create({
         width: '45%',
         alignItems: 'center',
         backgroundColor: 'blue'
+      },
+      biometricButton:{
+        marginTop: 10
       }
 });

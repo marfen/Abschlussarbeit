@@ -33,6 +33,16 @@ export default StyleSheet.create({
         width: '45%',
         alignItems: 'center',
         backgroundColor: 'red'
+      },
+      biometricButton:{
+        marginTop: 20
+      },
+      notificationButton: {
+        width: '50%',
+        marginBottom: 10
+      },
+      loginButton: {
+        width: '50%'
       }
     
 });

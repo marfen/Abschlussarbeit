@@ -9,6 +9,7 @@ import CardDetailsScreen from './../screens/CardDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
+//Navigation Stack containing all Screens
 const RootStack = () => {
 
 
@@ -18,15 +19,15 @@ const RootStack = () => {
         <CredentialsContext.Consumer>
             {({storedCredentials}) => (
                 <NavigationContainer>
-                <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
-                    {storedCredentials ? (
-                        <Stack.Screen name="CardDetails" component={CardDetailsScreen}/>
-                    ) : (
-                        <>
+                    <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
+                        {storedCredentials ? (
+                            <Stack.Screen name="CardDetails" component={CardDetailsScreen}/>
+                        ) : (
+                            <>
                             <Stack.Screen name="Login" component={LoginScreen}/>
-                        </>
-                    )}
-                </Stack.Navigator>
+                            </>
+                        )}
+                    </Stack.Navigator>
                 </NavigationContainer>
 
             )}

@@ -6,23 +6,34 @@ Node 10 LTS or higher required.
 install EXPO CLI
 
 `npm install -g expo-cli`
+or
+`yarn global add expo-cli`
 
 
 `cd cobra-react native`
 
 
+`npm install`
+or
+`yarn install`
+
+
+
 
 # run simulation in expo go app
 
-`expo start`
+Download expo Go App on Android or Iphone and run
 
+`expo start`
+ 
+ Scann QR-Code with App
 
 
 # build app
 
 ## android
 
-Android platform tools & adb
+Download and install Android platform tools & adb
 
 
 `expo build:android -t apk`
@@ -36,10 +47,6 @@ install on device
 
 
 
-https://docs.expo.dev/distribution/building-standalone-apps/#android
-
-
-https://www.oracle.com/webapps/redirect/signon?nexturl=https://download.oracle.com/otn-pub/java/jdk/11.0.13%2B10/bdde8881e2e3437baa70044f884d2d67/jdk-11.0.13_osx-x64_bin.dmg
 
 ## iOS
 

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "cobra-react-native2",
-    "slug": "cobra-react-native2",
+    "name": "App2",
+    "slug": "App2",
     "description": "cobra hybrid prototype 2",
     "version": "1.0.0",
     "orientation": "portrait",

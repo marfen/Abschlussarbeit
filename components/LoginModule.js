@@ -10,9 +10,10 @@ import {CredentialsContext} from './../components/CredentialsContext';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+//imports brand specific stylesheet object for App
 const styles = require('./../brands')('App')
 
-
+//hardcoded valid user credentials
 const userInfo = {username: 'admin', password: '1234'};
 
 
@@ -20,7 +21,7 @@ const userInfo = {username: 'admin', password: '1234'};
 class LoginScreen extends Component {
 
 
-
+  //instantiat context
   static contextType = CredentialsContext;
 
   componentDidMount(){
@@ -35,6 +36,7 @@ class LoginScreen extends Component {
     }
   }
 
+  // persists login and sets context
   persistLogin = (credentials) => {
     AsyncStorage.setItem('userCredentials', JSON.stringify(credentials))
     .then(() => {
@@ -68,12 +70,13 @@ class LoginScreen extends Component {
           onPress={this._login}>
           <Text>Login</Text>
         </TouchableOpacity>
-        <Button title="biometric login" onPress={this.biometricsAuth}></Button>
+        <Button style={styles.biometricButton} title="biometric login" onPress={this.biometricsAuth}></Button>
       </View>
     )
     
   }
 
+  //login function
   _login = async() => {
     if(userInfo.username === this.state.username && userInfo.password === this.state.password){
       this.persistLogin(this.state)
@@ -83,7 +86,7 @@ class LoginScreen extends Component {
   }
 
   
-  
+  //function for biometric auth
   biometricsAuth = async () => {
  
     const compatible = await hasHardwareAsync()
@@ -96,7 +99,7 @@ class LoginScreen extends Component {
     if (!result.success){
       throw `${result.error} - Authentication unsuccessful`
     } else{
-      this.context.setStoredCredentials(result);
+      this.persistLogin(result);
     }
   }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "919911441934",
+    "project_id": "cobra-react-native2",
+    "storage_bucket": "cobra-react-native2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919911441934:android:54dd1bd371f84a4e59fe5f",
+        "android_client_info": {
+          "package_name": "com.cobrareactnative2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919911441934-m4authmrftlu1sb410h0i36dt29n319b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0qjlYF0KO7huQVf20A7i0CLBhhY-ztIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919911441934-m4authmrftlu1sb410h0i36dt29n319b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
